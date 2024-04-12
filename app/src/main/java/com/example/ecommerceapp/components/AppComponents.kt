@@ -235,9 +235,11 @@ fun ClickableTextComponent(value: String, onTextSelected: (String)-> Unit){
 }
 
 @Composable
-fun ButtonComponent(value: String){
+fun ButtonComponent(value: String, onButtonClicked: () -> Unit){
     Button(
-        onClick = {},
+        onClick = {
+                  onButtonClicked.invoke()
+        },
         modifier = Modifier
             .fillMaxWidth()
             .height(48.dp),

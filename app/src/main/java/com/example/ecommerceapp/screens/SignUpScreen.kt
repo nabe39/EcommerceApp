@@ -77,7 +77,9 @@ fun SignUpScreen(loginViewModel: LoginViewModel = viewModel()){
                     PostOfficeAppRouter.navigateTo(Screen.TermsAndConditionsScreen)
                 })
             Spacer(modifier = Modifier.height(80.dp))
-            ButtonComponent(value = stringResource(id = R.string.register),)
+            ButtonComponent(value = stringResource(id = R.string.register), onButtonClicked = {
+                loginViewModel.onEvent(UIEvent.RegisterButtonClicked)
+            } )
             Spacer(modifier = Modifier.height(20.dp))
             DividerTextComponent()
             ClickableLoginTextComponent(tryingToLogin = true,onTextSelected = {
