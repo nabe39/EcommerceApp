@@ -14,6 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.ecommerceapp.R
 import com.example.ecommerceapp.components.ButtonComponent
 import com.example.ecommerceapp.navigation.PostOfficeAppRouter
@@ -25,9 +26,11 @@ import com.example.ecommerceapp.components.HeadingTextComponent
 import com.example.ecommerceapp.components.MyTextField
 import com.example.ecommerceapp.components.NormalTextComponent
 import com.example.ecommerceapp.components.PasswordTextField
+import com.example.ecommerceapp.data.LoginViewModel
+import com.example.ecommerceapp.data.UIEvent
 
 @Composable
-fun SignUpScreen(){
+fun SignUpScreen(loginViewModel: LoginViewModel = viewModel()){
     Surface(
         color = Color.White,
         modifier = Modifier
@@ -44,18 +47,30 @@ fun SignUpScreen(){
             MyTextField(
                 labelValue = stringResource(id = R.string.first_name),
                 painterResource(id = R.drawable.profile),
+                onTextSelected = {
+                    loginViewModel.onEvent(UIEvent.FirstNameChange(it))
+                }
             )
             MyTextField(
                 labelValue = stringResource(id = R.string.last_name ),
                 painterResource = painterResource(id = R.drawable.profile),
+                onTextSelected = {
+                    loginViewModel.onEvent(UIEvent.LastNameChanged(it))
+                }
             )
             MyTextField(
                 labelValue = stringResource(id = R.string.email ),
                 painterResource = painterResource(id = R.drawable.email),
+                onTextSelected = {
+                    loginViewModel.onEvent(UIEvent.EmailChanged(it))
+                }
             )
             PasswordTextField(
                 labelValue = stringResource(id = R.string.password ),
                 painterResource = painterResource(id = R.drawable.password),
+                onTextSelected = {
+                    loginViewModel.onEvent(UIEvent.PasswordChanged(it))
+                }
             )
             CheckboxComponent(value = stringResource(id = R.string.term_and_contract),
                 onTextSelected = {
