@@ -94,7 +94,10 @@ fun HeadingTextComponent(value:String){
 }
 
 @Composable
-fun MyTextField(labelValue: String, painterResource: Painter){
+fun MyTextField(labelValue: String, painterResource: Painter,
+                onTextSelected: (String) -> Unit,
+                errorStatus: Boolean = false
+) {
     val textValue = remember {
         mutableStateOf("")
     }
@@ -115,19 +118,23 @@ fun MyTextField(labelValue: String, painterResource: Painter){
         value = textValue.value,
         onValueChange = {
             textValue.value = it
+            onTextSelected(it)
         },
         leadingIcon = {
             Icon(painter = painterResource, modifier = Modifier
                 .width(24.dp)
                 .height(24.dp), contentDescription = null)
         },
-
+        isError = !errorStatus
     )
 
 }
 
 @Composable
-fun PasswordTextField(labelValue: String, painterResource: Painter){
+fun PasswordTextField(labelValue: String, painterResource: Painter,
+                      onTextSelected: (String) -> Unit,
+                      errorStatus: Boolean = false
+) {
     val localFocusManager = LocalFocusManager.current
     val password = remember {
         mutableStateOf("")
@@ -154,6 +161,7 @@ fun PasswordTextField(labelValue: String, painterResource: Painter){
         value = password.value,
         onValueChange = {
             password.value = it
+            onTextSelected(it)
         },
         leadingIcon = {
             Icon(painter = painterResource, modifier = Modifier
@@ -178,7 +186,8 @@ fun PasswordTextField(labelValue: String, painterResource: Painter){
             }
         },
         visualTransformation = if(passwordVisible.value) VisualTransformation.None
-        else {PasswordVisualTransformation()}
+        else {PasswordVisualTransformation()},
+        isError = !errorStatus
     )
 
 }
@@ -194,9 +203,9 @@ fun CheckboxComponent(value: String, onTextSelected: (String) -> Unit){
         val checkedState = remember{
             mutableStateOf(false)
         }
-            Checkbox(checked = checkedState.value , onCheckedChange ={
-                checkedState.value != checkedState.value
-            })
+        Checkbox(checked = checkedState.value , onCheckedChange ={
+            checkedState.value != checkedState.value
+        })
         ClickableTextComponent(value =value, onTextSelected)
     }
 }
@@ -233,9 +242,11 @@ fun ClickableTextComponent(value: String, onTextSelected: (String)-> Unit){
 }
 
 @Composable
-fun ButtonComponent(value: String){
+fun ButtonComponent(value: String, onButtonClicked: () -> Unit){
     Button(
-        onClick = {},
+        onClick = {
+            onButtonClicked.invoke()
+        },
         modifier = Modifier
             .fillMaxWidth()
             .height(48.dp),
@@ -304,16 +315,16 @@ fun ClickableLoginTextComponent(tryingToLogin: Boolean = true,onTextSelected: (S
         ),
         text = annotatedString,
         onClick ={offset ->
-        annotatedString.getStringAnnotations(offset,offset)
-            .firstOrNull()?.also {span ->
-                Log.d("ClickableTextComponent","{$span}")
-                if((span.item == LoginText)){
-                    onTextSelected(span.item)
+            annotatedString.getStringAnnotations(offset,offset)
+                .firstOrNull()?.also {span ->
+                    Log.d("ClickableTextComponent","{$span}")
+                    if((span.item == LoginText)){
+                        onTextSelected(span.item)
+                    }
                 }
-            }
 
 
-    } )
+        } )
 }
 
 @Composable
