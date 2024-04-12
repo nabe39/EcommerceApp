@@ -94,7 +94,7 @@ fun HeadingTextComponent(value:String){
 }
 
 @Composable
-fun MyTextField(labelValue: String, painterResource: Painter){
+fun MyTextField(labelValue: String, painterResource: Painter, onTextSelected: (String) -> Unit){
     val textValue = remember {
         mutableStateOf("")
     }
@@ -115,6 +115,7 @@ fun MyTextField(labelValue: String, painterResource: Painter){
         value = textValue.value,
         onValueChange = {
             textValue.value = it
+            onTextSelected(it)
         },
         leadingIcon = {
             Icon(painter = painterResource, modifier = Modifier
@@ -127,7 +128,7 @@ fun MyTextField(labelValue: String, painterResource: Painter){
 }
 
 @Composable
-fun PasswordTextField(labelValue: String, painterResource: Painter){
+fun PasswordTextField(labelValue: String, painterResource: Painter, onTextSelected: (String) -> Unit){
     val localFocusManager = LocalFocusManager.current
     val password = remember {
         mutableStateOf("")
@@ -154,6 +155,7 @@ fun PasswordTextField(labelValue: String, painterResource: Painter){
         value = password.value,
         onValueChange = {
             password.value = it
+            onTextSelected(it)
         },
         leadingIcon = {
             Icon(painter = painterResource, modifier = Modifier
@@ -233,9 +235,11 @@ fun ClickableTextComponent(value: String, onTextSelected: (String)-> Unit){
 }
 
 @Composable
-fun ButtonComponent(value: String){
+fun ButtonComponent(value: String, onButtonClicked: () -> Unit){
     Button(
-        onClick = {},
+        onClick = {
+                  onButtonClicked.invoke()
+        },
         modifier = Modifier
             .fillMaxWidth()
             .height(48.dp),
