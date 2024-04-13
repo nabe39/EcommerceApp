@@ -1,6 +1,7 @@
 package com.example.ecommerceapp.components
 
 import android.util.Log
+import android.widget.CompoundButton.OnCheckedChangeListener
 import android.widget.Space
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -94,14 +95,12 @@ fun HeadingTextComponent(value:String){
 }
 
 @Composable
-// <<<<<<< DungWork
+
 fun MyTextField(labelValue: String, painterResource: Painter,
-                onTextSelected: (String) -> Unit,
+                onTextChanged: (String) -> Unit,
                 errorStatus: Boolean = false
 ) {
-// =======
-// fun MyTextField(labelValue: String, painterResource: Painter, onTextSelected: (String) -> Unit){
-// >>>>>>> main
+
     val textValue = remember {
         mutableStateOf("")
     }
@@ -122,7 +121,7 @@ fun MyTextField(labelValue: String, painterResource: Painter,
         value = textValue.value,
         onValueChange = {
             textValue.value = it
-            onTextSelected(it)
+            onTextChanged(it)
         },
         leadingIcon = {
             Icon(painter = painterResource, modifier = Modifier
@@ -135,14 +134,10 @@ fun MyTextField(labelValue: String, painterResource: Painter,
 }
 
 @Composable
-// <<<<<<< DungWork
 fun PasswordTextField(labelValue: String, painterResource: Painter,
-                      onTextSelected: (String) -> Unit,
-                      errorStatus: Boolean = false
-) {
-// =======
-// fun PasswordTextField(labelValue: String, painterResource: Painter, onTextSelected: (String) -> Unit){
-// >>>>>>> main
+                      onTextChanged: (String) -> Unit,
+                      errorStatus: Boolean = false) {
+
     val localFocusManager = LocalFocusManager.current
     val password = remember {
         mutableStateOf("")
@@ -169,7 +164,7 @@ fun PasswordTextField(labelValue: String, painterResource: Painter,
         value = password.value,
         onValueChange = {
             password.value = it
-            onTextSelected(it)
+            onTextChanged(it)
         },
         leadingIcon = {
             Icon(painter = painterResource, modifier = Modifier
@@ -201,7 +196,7 @@ fun PasswordTextField(labelValue: String, painterResource: Painter,
 }
 
 @Composable
-fun CheckboxComponent(value: String, onTextSelected: (String) -> Unit){
+fun CheckboxComponent(value: String, onTextSelected: (String) -> Unit, onCheckedChange: (Boolean) -> Unit){
     Row(modifier = Modifier
         .fillMaxWidth()
         .height(70.dp)
@@ -211,9 +206,12 @@ fun CheckboxComponent(value: String, onTextSelected: (String) -> Unit){
         val checkedState = remember{
             mutableStateOf(false)
         }
-        Checkbox(checked = checkedState.value , onCheckedChange ={
-            checkedState.value != checkedState.value
-        })
+        Checkbox(checked = checkedState.value ,
+            onCheckedChange ={
+                checkedState.value != checkedState.value
+                onCheckedChange.invoke(it)
+            }
+        )
         ClickableTextComponent(value =value, onTextSelected)
     }
 }
@@ -250,20 +248,17 @@ fun ClickableTextComponent(value: String, onTextSelected: (String)-> Unit){
 }
 
 @Composable
-fun ButtonComponent(value: String, onButtonClicked: () -> Unit){
+fun ButtonComponent(value: String, onButtonClicked: () -> Unit, isEnabled : Boolean){
     Button(
         onClick = {
-// <<<<<<< DungWork
             onButtonClicked.invoke()
-// =======
-//                   onButtonClicked.invoke()
-// >>>>>>> main
         },
         modifier = Modifier
             .fillMaxWidth()
             .height(48.dp),
         contentPadding = PaddingValues(),
-        colors = ButtonDefaults.buttonColors(Color.Transparent)
+        colors = ButtonDefaults.buttonColors(Color.Transparent),
+        enabled = isEnabled
     ) {
         Box(modifier = Modifier
             .fillMaxWidth()

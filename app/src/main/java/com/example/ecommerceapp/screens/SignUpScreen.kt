@@ -1,13 +1,16 @@
 package com.example.ecommerceapp.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -26,88 +29,91 @@ import com.example.ecommerceapp.components.HeadingTextComponent
 import com.example.ecommerceapp.components.MyTextField
 import com.example.ecommerceapp.components.NormalTextComponent
 import com.example.ecommerceapp.components.PasswordTextField
-import com.example.ecommerceapp.data.LoginViewModel
-import com.example.ecommerceapp.data.UIEvent
+import com.example.ecommerceapp.data.SignupViewModel
+import com.example.ecommerceapp.data.SignupUIEvent
 
 @Composable
-fun SignUpScreen(loginViewModel: LoginViewModel = viewModel()){
-    Surface(
-        color = Color.White,
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(28.dp)
-            .background(Color.White),
-    ) {
-        Column(
-            modifier = Modifier.fillMaxSize()
+fun SignUpScreen(signupViewModel: SignupViewModel = viewModel()){
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
+        Surface(
+            color = Color.White,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(28.dp)
+                .background(Color.White),
         ) {
-            NormalTextComponent(value = stringResource(id = R.string.hello))
-            HeadingTextComponent(value = stringResource(id = R.string.create_account))
-            Spacer(modifier = Modifier.height(20.dp))
-            MyTextField(
-                labelValue = stringResource(id = R.string.first_name),
-                painterResource(id = R.drawable.profile),
-                onTextSelected = {
-                    loginViewModel.onEvent(UIEvent.FirstNameChange(it))
-// <<<<<<< DungWork
+            Column(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                NormalTextComponent(value = stringResource(id = R.string.hello))
+                HeadingTextComponent(value = stringResource(id = R.string.create_account))
+                Spacer(modifier = Modifier.height(20.dp))
+                MyTextField(
+                    labelValue = stringResource(id = R.string.first_name),
+                    painterResource(id = R.drawable.profile),
+                    onTextChanged = {
+                        signupViewModel.onEvent(SignupUIEvent.FirstNameChange(it))
+
+                    },
+                    errorStatus = signupViewModel.registrationUIState.value.firstNameError
+
+                )
+                MyTextField(
+                    labelValue = stringResource(id = R.string.last_name ),
+                    painterResource = painterResource(id = R.drawable.profile),
+                    onTextChanged = {
+                        signupViewModel.onEvent(SignupUIEvent.LastNameChanged(it))
+
+                    },
+                    errorStatus = signupViewModel.registrationUIState.value.lastNameError
+
+                )
+                MyTextField(
+                    labelValue = stringResource(id = R.string.email ),
+                    painterResource = painterResource(id = R.drawable.email),
+                    onTextChanged = {
+                        signupViewModel.onEvent(SignupUIEvent.EmailChanged(it))
+
+                    },
+                    errorStatus = signupViewModel.registrationUIState.value.emailError
+
+                )
+                PasswordTextField(
+                    labelValue = stringResource(id = R.string.password ),
+                    painterResource = painterResource(id = R.drawable.password),
+                    onTextChanged = {
+                        signupViewModel.onEvent(SignupUIEvent.PasswordChanged(it))
+
+                    },
+                    errorStatus = signupViewModel.registrationUIState.value.passwordError
+
+                )
+                CheckboxComponent(value = stringResource(id = R.string.term_and_contract),
+                    onTextSelected = {
+                        PostOfficeAppRouter.navigateTo(Screen.TermsAndConditionsScreen)
+                    },
+                    onCheckedChange = {
+                        signupViewModel.onEvent(SignupUIEvent.PrivacyPolicyCheckBoxClicked(it))
+                    } )
+                Spacer(modifier = Modifier.height(80.dp))
+                ButtonComponent(value = stringResource(id = R.string.register), onButtonClicked = {
+                    signupViewModel.onEvent(SignupUIEvent.RegisterButtonClicked)
                 },
-                errorStatus = loginViewModel.registrationUIState.value.firstNameError
-// =======
-//                 }
-// >>>>>>> main
-            )
-            MyTextField(
-                labelValue = stringResource(id = R.string.last_name ),
-                painterResource = painterResource(id = R.drawable.profile),
-                onTextSelected = {
-                    loginViewModel.onEvent(UIEvent.LastNameChanged(it))
-// <<<<<<< DungWork
-                },
-                errorStatus = loginViewModel.registrationUIState.value.lastNameError
-// =======
-//                 }
-// >>>>>>> main
-            )
-            MyTextField(
-                labelValue = stringResource(id = R.string.email ),
-                painterResource = painterResource(id = R.drawable.email),
-                onTextSelected = {
-                    loginViewModel.onEvent(UIEvent.EmailChanged(it))
-// <<<<<<< DungWork
-                },
-                errorStatus = loginViewModel.registrationUIState.value.emailError
-// =======
-//                 }
-// >>>>>>> main
-            )
-            PasswordTextField(
-                labelValue = stringResource(id = R.string.password ),
-                painterResource = painterResource(id = R.drawable.password),
-                onTextSelected = {
-                    loginViewModel.onEvent(UIEvent.PasswordChanged(it))
-// <<<<<<< DungWork
-                },
-                errorStatus = loginViewModel.registrationUIState.value.passwordError
-// =======
-//                 }
-// >>>>>>> main
-            )
-            CheckboxComponent(value = stringResource(id = R.string.term_and_contract),
-                onTextSelected = {
-                    PostOfficeAppRouter.navigateTo(Screen.TermsAndConditionsScreen)
+                    isEnabled = signupViewModel.allValidationsPassed.value )
+                Spacer(modifier = Modifier.height(20.dp))
+                DividerTextComponent()
+                ClickableLoginTextComponent(tryingToLogin = true,onTextSelected = {
+                    PostOfficeAppRouter.navigateTo(Screen.LoginScreen)
                 })
-            Spacer(modifier = Modifier.height(80.dp))
-            ButtonComponent(value = stringResource(id = R.string.register), onButtonClicked = {
-                loginViewModel.onEvent(UIEvent.RegisterButtonClicked)
-            } )
-            Spacer(modifier = Modifier.height(20.dp))
-            DividerTextComponent()
-            ClickableLoginTextComponent(tryingToLogin = true,onTextSelected = {
-                PostOfficeAppRouter.navigateTo(Screen.LoginScreen)
-            })
+            }
+
+        }
+        if (signupViewModel.signUpInProgress.value){
+            CircularProgressIndicator()
         }
 
     }
+
 }
 
 
