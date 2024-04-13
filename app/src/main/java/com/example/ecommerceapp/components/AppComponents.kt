@@ -94,10 +94,14 @@ fun HeadingTextComponent(value:String){
 }
 
 @Composable
+// <<<<<<< DungWork
 fun MyTextField(labelValue: String, painterResource: Painter,
                 onTextSelected: (String) -> Unit,
                 errorStatus: Boolean = false
 ) {
+// =======
+// fun MyTextField(labelValue: String, painterResource: Painter, onTextSelected: (String) -> Unit){
+// >>>>>>> main
     val textValue = remember {
         mutableStateOf("")
     }
@@ -131,10 +135,14 @@ fun MyTextField(labelValue: String, painterResource: Painter,
 }
 
 @Composable
+// <<<<<<< DungWork
 fun PasswordTextField(labelValue: String, painterResource: Painter,
                       onTextSelected: (String) -> Unit,
                       errorStatus: Boolean = false
 ) {
+// =======
+// fun PasswordTextField(labelValue: String, painterResource: Painter, onTextSelected: (String) -> Unit){
+// >>>>>>> main
     val localFocusManager = LocalFocusManager.current
     val password = remember {
         mutableStateOf("")
@@ -245,7 +253,11 @@ fun ClickableTextComponent(value: String, onTextSelected: (String)-> Unit){
 fun ButtonComponent(value: String, onButtonClicked: () -> Unit){
     Button(
         onClick = {
+// <<<<<<< DungWork
             onButtonClicked.invoke()
+// =======
+//                   onButtonClicked.invoke()
+// >>>>>>> main
         },
         modifier = Modifier
             .fillMaxWidth()

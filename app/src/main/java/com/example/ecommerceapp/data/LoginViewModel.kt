@@ -10,7 +10,10 @@ class LoginViewModel: ViewModel() {
 
     var registrationUIState = mutableStateOf(RegistrationUIState())
     fun onEvent(event:UIEvent){
+// <<<<<<< DungWork
         validateDataWithRules()
+// =======
+// >>>>>>> main
         when(event){
             is UIEvent.FirstNameChange -> {
                 registrationUIState.value = registrationUIState.value.copy(
@@ -47,6 +50,7 @@ class LoginViewModel: ViewModel() {
     private fun signUp(){
         Log.d(TAG,"Inside_SignUp")
         printState()
+// <<<<<<< DungWork
 
         validateDataWithRules()
     }
@@ -78,6 +82,8 @@ class LoginViewModel: ViewModel() {
             emailError = emailResult.status,
             passwordError = passwordResult.status,
         )
+// =======
+// >>>>>>> main
     }
     private fun printState(){
         Log.d(TAG,"Inside_printState")

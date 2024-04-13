@@ -50,7 +50,11 @@ fun LoginScreen(){
                 }
             )
             PasswordTextField(
+// <<<<<<< DungWork
                 labelValue = stringResource(id = R.string.password),
+// =======
+//                 labelValue = stringResource(id = R.string.password), 
+// >>>>>>> main
                 painterResource = painterResource(id = R.drawable.password),
                 onTextSelected = {
 
