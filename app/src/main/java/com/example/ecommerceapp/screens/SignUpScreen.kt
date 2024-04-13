@@ -49,28 +49,48 @@ fun SignUpScreen(loginViewModel: LoginViewModel = viewModel()){
                 painterResource(id = R.drawable.profile),
                 onTextSelected = {
                     loginViewModel.onEvent(UIEvent.FirstNameChange(it))
-                }
+// <<<<<<< DungWork
+                },
+                errorStatus = loginViewModel.registrationUIState.value.firstNameError
+// =======
+//                 }
+// >>>>>>> main
             )
             MyTextField(
                 labelValue = stringResource(id = R.string.last_name ),
                 painterResource = painterResource(id = R.drawable.profile),
                 onTextSelected = {
                     loginViewModel.onEvent(UIEvent.LastNameChanged(it))
-                }
+// <<<<<<< DungWork
+                },
+                errorStatus = loginViewModel.registrationUIState.value.lastNameError
+// =======
+//                 }
+// >>>>>>> main
             )
             MyTextField(
                 labelValue = stringResource(id = R.string.email ),
                 painterResource = painterResource(id = R.drawable.email),
                 onTextSelected = {
                     loginViewModel.onEvent(UIEvent.EmailChanged(it))
-                }
+// <<<<<<< DungWork
+                },
+                errorStatus = loginViewModel.registrationUIState.value.emailError
+// =======
+//                 }
+// >>>>>>> main
             )
             PasswordTextField(
                 labelValue = stringResource(id = R.string.password ),
                 painterResource = painterResource(id = R.drawable.password),
                 onTextSelected = {
                     loginViewModel.onEvent(UIEvent.PasswordChanged(it))
-                }
+// <<<<<<< DungWork
+                },
+                errorStatus = loginViewModel.registrationUIState.value.passwordError
+// =======
+//                 }
+// >>>>>>> main
             )
             CheckboxComponent(value = stringResource(id = R.string.term_and_contract),
                 onTextSelected = {
