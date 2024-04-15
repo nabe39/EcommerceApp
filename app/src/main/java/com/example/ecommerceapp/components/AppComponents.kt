@@ -204,13 +204,13 @@ fun CheckboxComponent(value: String, onTextSelected: (String) -> Unit, onChecked
         .padding(),
         verticalAlignment = Alignment.CenterVertically
     ){
-        val checkedState = remember{
+        var checkedState = remember{
             mutableStateOf(false)
         }
         Checkbox(checked = checkedState.value ,
             onCheckedChange ={
+                onCheckedChange.invoke(checkedState.value)
                 checkedState.value = !checkedState.value
-                onCheckedChange.invoke(it)
             },
             colors = CheckboxDefaults.colors(Color.Blue)
         )
