@@ -56,7 +56,7 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()){
                 MyTextField(
                     labelValue = stringResource(id = R.string.email),
                     painterResource = painterResource(id = R.drawable.email),
-                    onTextChanged = {
+                    onTextSelected = {
                         loginViewModel.onEvent(LoginUIEvent.EmailChanged(it))
                     },
                     errorStatus = loginViewModel.loginUIState.value.emailError
@@ -66,7 +66,7 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()){
                     labelValue = stringResource(id = R.string.password),
 
                     painterResource = painterResource(id = R.drawable.password),
-                    onTextChanged = {
+                    onTextSelected = {
                         loginViewModel.onEvent(LoginUIEvent.PasswordChanged(it))
                     },
                     errorStatus = loginViewModel.loginUIState.value.passwordError

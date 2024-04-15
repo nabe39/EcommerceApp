@@ -25,6 +25,7 @@ import androidx.compose.material3.AlertDialogDefaults.shape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -97,7 +98,7 @@ fun HeadingTextComponent(value:String){
 @Composable
 
 fun MyTextField(labelValue: String, painterResource: Painter,
-                onTextChanged: (String) -> Unit,
+                onTextSelected: (String) -> Unit,
                 errorStatus: Boolean = false
 ) {
 
@@ -121,7 +122,7 @@ fun MyTextField(labelValue: String, painterResource: Painter,
         value = textValue.value,
         onValueChange = {
             textValue.value = it
-            onTextChanged(it)
+            onTextSelected(it)
         },
         leadingIcon = {
             Icon(painter = painterResource, modifier = Modifier
@@ -135,7 +136,7 @@ fun MyTextField(labelValue: String, painterResource: Painter,
 
 @Composable
 fun PasswordTextField(labelValue: String, painterResource: Painter,
-                      onTextChanged: (String) -> Unit,
+                      onTextSelected: (String) -> Unit,
                       errorStatus: Boolean = false) {
 
     val localFocusManager = LocalFocusManager.current
@@ -164,7 +165,7 @@ fun PasswordTextField(labelValue: String, painterResource: Painter,
         value = password.value,
         onValueChange = {
             password.value = it
-            onTextChanged(it)
+            onTextSelected(it)
         },
         leadingIcon = {
             Icon(painter = painterResource, modifier = Modifier
@@ -208,9 +209,10 @@ fun CheckboxComponent(value: String, onTextSelected: (String) -> Unit, onChecked
         }
         Checkbox(checked = checkedState.value ,
             onCheckedChange ={
-                checkedState.value != checkedState.value
+                checkedState.value = !checkedState.value
                 onCheckedChange.invoke(it)
-            }
+            },
+            colors = CheckboxDefaults.colors(Color.Blue)
         )
         ClickableTextComponent(value =value, onTextSelected)
     }
